@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import List
 from fetcher.Keyword import Keyword
 from fetcher.base import BaseFetcher
+import urllib.request
 
 
 class SinaWeibo(BaseFetcher):
@@ -29,4 +30,4 @@ class SinaWeibo(BaseFetcher):
 
 def main():
     sina = SinaWeibo()
-    sina.download().fetch().write_to_local()
+    sina.open_local().fetch().write_to_local()

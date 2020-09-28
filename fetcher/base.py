@@ -19,7 +19,7 @@ class BaseFetcher:
         self.data = None
 
     def fetch(self):
-        self.download()
+        self.open_local()
         cur_data = self.__fetch__()
         rows = [c.get_row_data() for c in cur_data]
         columns = Keyword.get_column_name()
@@ -47,7 +47,7 @@ class BaseFetcher:
     def __get_output_name__(self):
         return f'{self.name}.csv'
 
-    def download(self):
+    def open_local(self):
         """
         Download and load local csv
         :arg
