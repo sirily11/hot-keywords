@@ -19,7 +19,7 @@ jobs:
       - run: apt-get update
       - run: apt -y install wget
       - name: Fetch current files
-      - run: wget https://github.com/sirily11/hot-keywords/releases/latest/download/SinaWeibo.csv
+        run: wget https://github.com/sirily11/hot-keywords/releases/latest/download/SinaWeibo.csv
       - run: pip3 install pipenv
       - name: Install dependencies
         run: pipenv install
