@@ -22,7 +22,7 @@ jobs:
         run: wget https://github.com/sirily11/hot-keywords/releases/latest/download/SinaWeibo.csv
       - run: pip3 install pipenv
       - name: Install dependencies
-        run: pipenv install
+        run: pipenv install --skip-lock
       - name: Run
         run: pipenv run python3 index.py
       - name: Update Release
