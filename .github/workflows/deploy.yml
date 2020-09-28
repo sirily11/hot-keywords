@@ -1,0 +1,31 @@
+name: Python Release
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "*/90 * * * *"
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+  steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - run: pip3 install pipenv
+    - name: Install dependencies
+      run: pipenv install
+    - name: Run index.py
+      run: pipenv run python3 index.py
+    - name: Update Release
+      uses: johnwbyrd/update-release@v1.0.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        files: SinaWeibo.csv
+        prerelease: false
