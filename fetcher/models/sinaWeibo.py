@@ -29,5 +29,7 @@ class SinaWeibo(BaseFetcher):
 
 
 def main():
-    sina = SinaWeibo()
-    sina.open_local().fetch().write_to_local()
+    t = BaseFetcher.get_cur_time()
+    print(t)
+    # sina = SinaWeibo()
+    # sina.open_local().fetch().write_to_local()

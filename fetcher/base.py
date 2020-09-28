@@ -6,7 +6,7 @@ from pandas import DataFrame
 import pandas as pd
 from requests_html import HTMLSession
 from .Keyword import Keyword
-import urllib.request
+from tzlocal import get_localzone
 
 
 class BaseFetcher:
@@ -32,9 +32,11 @@ class BaseFetcher:
 
     @staticmethod
     def get_cur_time() -> datetime:
+        local_tz = get_localzone()
         d = datetime.now()
-        timezone = pytz.timezone("Asia/Hong_Kong")
-        now = timezone.localize(d)
+        to_tz = pytz.timezone("Asia/Hong_Kong")
+        local_now = local_tz.localize(d)
+        now = local_now.astimezone(to_tz)
         return now
 
     def __fetch__(self) -> List[Keyword]:

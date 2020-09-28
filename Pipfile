@@ -9,6 +9,7 @@ verify_ssl = true
 pandas = "*"
 requests-html = "*"
 pytz = "*"
+tzlocal = "*"
 
 [requires]
 python_version = "3.8"
