@@ -16,7 +16,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      - run: apt -y install wget
+      - run: sudo apt-get update
+      - run: sudo apt -y install wget
       - name: Fetch current files
         run: wget https://github.com/sirily11/hot-keywords/releases/latest/download/SinaWeibo.csv
       - run: pip3 install pipenv
