@@ -25,7 +25,7 @@ class BaseFetcher:
         columns = Keyword.get_column_name()
         df = DataFrame(rows, columns=columns)
         if self.data is not None:
-            self.data = self.data.append(df, ignore_index=True)
+            self.data = pd.concat([self.data, df], ignore_index=True)
         else:
             self.data = df
         return self
@@ -60,6 +60,6 @@ class BaseFetcher:
     def write_to_local(self):
         output: DataFrame
         if self.data is not None:
-            self.data.to_csv(self.__get_output_name__(), index=True)
+            self.data.to_csv(self.__get_output_name__(), index=False)
         else:
             raise Exception("Data is None")
