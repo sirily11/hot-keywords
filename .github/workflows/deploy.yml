@@ -20,6 +20,8 @@ jobs:
       - run: sudo apt -y install wget
       - name: Fetch current files
         run: wget https://github.com/sirily11/hot-keywords/releases/latest/download/SinaWeibo.csv
+      - name: Fetch current files
+        run: wget https://github.com/sirily11/hot-keywords/releases/latest/download/SinaWeibo-posts.csv
       - run: pip3 install pipenv
       - name: Install dependencies
         run: pipenv install --skip-lock
@@ -29,5 +31,5 @@ jobs:
         uses: johnwbyrd/update-release@v1.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          files: SinaWeibo.csv
+          files: SinaWeibo.csv SinaWeibo-posts.csv
           prerelease: false

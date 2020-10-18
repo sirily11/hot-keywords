@@ -10,6 +10,7 @@ pandas = "*"
 requests-html = "*"
 pytz = "*"
 tzlocal = "*"
+tqdm = "*"
 
 [requires]
 python_version = "3.8"

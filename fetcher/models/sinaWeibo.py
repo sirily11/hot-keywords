@@ -1,6 +1,7 @@
 import time
 from datetime import datetime
 from typing import List
+from fetcher.Post import Post
 from fetcher.Keyword import Keyword
 from fetcher.base import BaseFetcher
 import urllib.request
@@ -26,6 +27,17 @@ class SinaWeibo(BaseFetcher):
                 index += 1
 
         return keyword_text
+
+    def __fetch_content__(self, keyword: Keyword) -> List[Post]:
+        url = "https://s.weibo.com/weibo?q=%E8%A7%A3%E6%95%A3&Refer=top"
+        r = self.session.get(url)
+        posts = []
+        contents = r.html.find(".txt")
+        for i, c in enumerate(contents):
+            if i > 10:
+                break
+            posts.append(Post(keyword=keyword.keyword, content=c.text))
+        return posts
 
 
 def main():
