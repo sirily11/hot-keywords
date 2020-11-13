@@ -4,10 +4,33 @@ from typing import List
 from fetcher.Post import Post
 from fetcher.Keyword import Keyword
 from fetcher.base import BaseFetcher
-import urllib.request
+from psycopg2.extras import execute_values
+import psycopg2
+from tqdm import tqdm
 
 
 class SinaWeibo(BaseFetcher):
+
+    def upload_to_db(self):
+        print("Uploading...")
+        conn = psycopg2.connect(user=self.username,
+                                password=self.password,
+                                host=self.endpoint,
+                                port='5432',
+                                database="dataset")
+
+        cursor = conn.cursor()
+        for keyword in tqdm(self.keywords):
+            sql = """
+            insert into dataset."hot-keywords".sina_keyword (time, keyword, numbers, rank) values (%s, %s, %s, %s) returning id;
+            """
+            cursor.execute(sql, keyword.get_row_data())
+            keyword_id = cursor.fetchone()[0]
+            related_posts = [[keyword_id, p.content] for p in self.posts if p.keyword == keyword.keyword]
+            execute_values(cursor, 'insert into dataset."hot-keywords".sina_post (keyword, content) VALUES %s on conflict (content) do nothing',
+                           related_posts)
+
+            conn.commit()
 
     def __init__(self):
         super().__init__()
@@ -42,4 +65,4 @@ class SinaWeibo(BaseFetcher):
 
 def main():
     sina = SinaWeibo()
-    sina.open_local().fetch().write_to_local()
+    sina.fetch().upload_to_db()

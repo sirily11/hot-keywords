@@ -11,6 +11,7 @@ requests-html = "*"
 pytz = "*"
 tzlocal = "*"
 tqdm = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.8"
