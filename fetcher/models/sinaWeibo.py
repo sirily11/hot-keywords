@@ -27,8 +27,9 @@ class SinaWeibo(BaseFetcher):
             cursor.execute(sql, keyword.get_row_data())
             keyword_id = cursor.fetchone()[0]
             related_posts = [[keyword_id, p.content] for p in self.posts if p.keyword == keyword.keyword]
-            execute_values(cursor, 'insert into dataset."hot-keywords".sina_post (keyword, content) VALUES %s on conflict (content) do nothing',
-                           related_posts)
+            for post in related_posts:
+                cursor.execute(
+                    """insert into dataset."hot-keywords".sina_post (keyword, content) values (%s, %s) on conflict (content) DO nothing """, post)
 
             conn.commit()
 
@@ -57,8 +58,6 @@ class SinaWeibo(BaseFetcher):
         posts = []
         contents = r.html.find(".txt")
         for i, c in enumerate(contents):
-            if i > 10:
-                break
             posts.append(Post(keyword=keyword.keyword, content=c.text))
         return posts
 

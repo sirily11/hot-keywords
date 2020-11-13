@@ -32,6 +32,7 @@ class BaseFetcher:
             try:
                 post = self.__fetch_content__(keyword)
                 cur_posts += post
+
             except Exception as e:
                 print(f"{keyword.keyword}: {e}")
 
