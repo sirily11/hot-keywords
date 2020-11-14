@@ -29,7 +29,7 @@ class SinaWeibo(BaseFetcher):
             related_posts = [[keyword_id, p.content] for p in self.posts if p.keyword == keyword.keyword]
             for post in related_posts:
                 cursor.execute(
-                    """insert into sina_post (keyword, content) values (%s, %s) on conflict (content) DO nothing """, post)
+                    """insert into sina_post (keyword_id, content) values (%s, %s) on conflict (content) DO nothing """, post)
 
             conn.commit()
 
