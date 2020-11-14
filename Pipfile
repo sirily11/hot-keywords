@@ -12,6 +12,8 @@ pytz = "*"
 tzlocal = "*"
 tqdm = "*"
 psycopg2-binary = "*"
+zappa = "*"
+flask = "*"
 
 [requires]
 python_version = "3.8"

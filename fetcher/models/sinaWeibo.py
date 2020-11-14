@@ -22,14 +22,14 @@ class SinaWeibo(BaseFetcher):
         cursor = conn.cursor()
         for keyword in tqdm(self.keywords):
             sql = """
-            insert into dataset."hot-keywords".sina_keyword (time, keyword, numbers, rank) values (%s, %s, %s, %s) returning id;
+            insert into sina_keyword (time, keyword, numbers, rank) values (%s, %s, %s, %s) returning id;
             """
             cursor.execute(sql, keyword.get_row_data())
             keyword_id = cursor.fetchone()[0]
             related_posts = [[keyword_id, p.content] for p in self.posts if p.keyword == keyword.keyword]
             for post in related_posts:
                 cursor.execute(
-                    """insert into dataset."hot-keywords".sina_post (keyword, content) values (%s, %s) on conflict (content) DO nothing """, post)
+                    """insert into sina_post (keyword, content) values (%s, %s) on conflict (content) DO nothing """, post)
 
             conn.commit()
 
