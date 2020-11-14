@@ -7,6 +7,7 @@ from fetcher.base import BaseFetcher
 from psycopg2.extras import execute_values
 import psycopg2
 from tqdm import tqdm
+import urllib.parse
 
 
 class SinaWeibo(BaseFetcher):
@@ -29,7 +30,7 @@ class SinaWeibo(BaseFetcher):
             related_posts = [[keyword_id, p.content] for p in self.posts if p.keyword == keyword.keyword]
             for post in related_posts:
                 cursor.execute(
-                    """insert into dataset_app_sinapost (keyword_id, content) values (%s, %s) on conflict (content) DO nothing """,
+                    """insert into dataset_app_sinapost (keyword_id, content) values (%s, %s) """,
                     post)
 
             conn.commit()
@@ -54,7 +55,7 @@ class SinaWeibo(BaseFetcher):
         return keyword_text
 
     def __fetch_content__(self, keyword: Keyword) -> List[Post]:
-        url = "https://s.weibo.com/weibo?q=%E8%A7%A3%E6%95%A3&Refer=top"
+        url = f"https://s.weibo.com/weibo?q={keyword.keyword}"
         r = self.session.get(url)
         posts = []
         contents = r.html.find(".txt")
