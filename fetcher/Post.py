@@ -1,3 +1,6 @@
+"""
+Author: Qiwei Li
+"""
 from typing import List
 
 from fetcher.Keyword import BaseData
