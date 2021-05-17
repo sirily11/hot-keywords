@@ -49,11 +49,15 @@ class SinaWeibo(BaseFetcher):
         keyword_text: List[Keyword] = []
         index = 0
         for i, keyword in enumerate(keywords):
-            link = keyword.find('a', first=True)
+            link = keyword.absolute_links
+            if len(link) == 0:
+                continue
+            link = link.pop()
             number = keyword.find('span', first=True)
             cur_time = self.get_cur_time()
             if link and number:
-                keyword_text.append(Keyword(keyword=link.text, numbers=int(number.text), cur_time=cur_time, rank=index))
+                number = number.text
+                keyword_text.append(Keyword(keyword=link, numbers=int(number), cur_time=cur_time, rank=index))
                 index += 1
 
         return keyword_text
