@@ -57,7 +57,8 @@ class SinaWeibo(BaseFetcher):
             cur_time = self.get_cur_time()
             if link and number:
                 number = number.text
-                keyword_text.append(Keyword(keyword=link, numbers=int(number), cur_time=cur_time, rank=index))
+                text = keyword.text.split()[1]
+                keyword_text.append(Keyword(keyword=text, numbers=int(number), cur_time=cur_time, rank=index))
                 index += 1
 
         return keyword_text
